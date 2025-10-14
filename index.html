@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Jua&family=Nunito:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Nunito:wght@300;400;600;700&family=Cinzel+Decorative:wght@700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -16,28 +16,24 @@
     <div class="texture"></div>
     <main class="scene">
       <header class="hero release-reveal is-hidden">
-        <span class="brand-pill">Insect Doctor</span>
-        <h1>곤충박사의 비밀 실험실</h1>
-        <p class="tagline">
-          택배 상자 안에 숨어 있는 숲속 친구들을 만나보세요. 탭, 탭, 탭!
-        </p>
+        <span class="brand-pill">Bug Scientist & Secret Forest</span>
+        <h1>곤충박사와 비밀의 숲</h1>
       </header>
 
-      <section class="box-stage">
-        <div
-          class="mystery-box"
-          id="mystery-box"
-          role="button"
-          aria-label="꿈틀거리는 택배 상자"
-          tabindex="0"
-          aria-live="polite"
-        >
-          <div class="lid"></div>
-          <div class="front"></div>
-          <div class="shadow"></div>
+      <section class="magnifier-stage">
+        <div class="magnifier-container">
+          <img
+            class="magnifier"
+            id="magnifier"
+            src="image.png"
+            alt="신비한 돋보기"
+            role="button"
+            tabindex="0"
+            aria-live="polite"
+          />
         </div>
         <p class="instructions release-reveal is-hidden" id="instructions">
-          상자를 톡톡 두드려 보세요!
+          돋보기를 톡톡 두드려 보세요!
         </p>
       </section>
 
@@ -46,9 +42,9 @@
 
     <section class="waitlist" id="waitlist" aria-live="polite">
       <div class="waitlist-card">
-        <h2>숲 속 연구에 함께하세요</h2>
+        <h2>비밀의 숲에 초대합니다.</h2>
         <p>
-          아직 비밀 준비 중이에요. 가장 먼저 업데이트를 받고 싶다면 이메일을 남겨주세요.
+          아직 준비 중이에요. 가장 먼저 업데이트를 받고 싶다면 이메일을 남겨주세요.
         </p>
         <form class="waitlist-form">
           <label class="sr-only" for="email-input">이메일 주소</label>
@@ -56,13 +52,13 @@
             id="email-input"
             type="email"
             name="email"
-            placeholder="name@example.com"
+            placeholder=""
             required
             autocomplete="email"
           />
           <button type="submit">Join Waitlist</button>
         </form>
-        <small>지금 신청하면 얼리 액세스 초대장을 보내드릴게요.</small>
+        <small>지금 신청하면 가장 빠른 초대장을 보내드릴게요.</small>
       </div>
     </section>
 

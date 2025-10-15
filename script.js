@@ -1073,18 +1073,89 @@ magnifier.addEventListener("keydown", (event) => {
   }
 });
 
-waitlist.querySelector("form").addEventListener("submit", (event) => {
+waitlist.querySelector("form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const emailInput = event.target.elements.email;
-  const previousText = instructions.textContent;
-  instructions.textContent = `${emailInput.value} 감사합니다! 곧 만나요.`;
-  event.target.reset();
-  setTimeout(() => {
-    if (released) {
-      instructions.textContent = previousText;
+  const submitButton = event.target.querySelector('button[type="submit"]');
+  const email = emailInput.value;
+
+  // 버튼 비활성화
+  submitButton.disabled = true;
+  submitButton.textContent = '전송 중...';
+
+  try {
+    const response = await fetch('https://eujrvwcdabtopxipqfwy.supabase.co/functions/v1/submit-email-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        app: '곤충박사'
+      })
+    });
+
+    if (response.ok) {
+      // 성공 시 팝업 표시
+      showSuccessPopup();
+      event.target.reset();
+    } else {
+      throw new Error('서버 오류가 발생했습니다.');
     }
-  }, 4000);
+  } catch (error) {
+    console.error('Error:', error);
+    alert('오류가 발생했어요. 다시 시도해주세요!');
+  } finally {
+    // 버튼 복원
+    submitButton.disabled = false;
+    submitButton.textContent = 'Join Waitlist';
+  }
 });
+
+// 성공 팝업 함수
+function showSuccessPopup() {
+  const popup = document.createElement('div');
+  popup.className = 'success-popup';
+  popup.innerHTML = `
+    <div class="popup-content">
+      <div class="popup-header">
+        <span class="popup-emoji">🎉</span>
+      </div>
+      <h3>와! 신청 완료!</h3>
+      <p>곤충박사와 함께하는<br>신나는 모험이 곧 시작돼요!</p>
+      <p class="popup-subtext">이메일로 초대장을 보내드릴게요 📧</p>
+      <button class="popup-close">확인</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  // 확인 버튼 클릭 이벤트
+  const closeButton = popup.querySelector('.popup-close');
+  closeButton.addEventListener('click', () => {
+    popup.classList.remove('show');
+    setTimeout(() => {
+      popup.remove();
+      // 페이지 새로고침 및 최상단 스크롤
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      location.reload();
+    }, 300);
+  });
+
+  // 애니메이션을 위해 약간의 딜레이 후 클래스 추가
+  setTimeout(() => {
+    popup.classList.add('show');
+  }, 10);
+
+  // 5초 후 자동으로 닫기 후 새로고침
+  setTimeout(() => {
+    popup.classList.remove('show');
+    setTimeout(() => {
+      popup.remove();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      location.reload();
+    }, 300);
+  }, 5000);
+}
 
 window.addEventListener("resize", () => {
   if (!released) return;
